@@ -82,6 +82,9 @@ def read_email():
             _typ, data = mail.fetch(num, '(RFC822)')
             msg = email.message_from_string(data[0][1].decode("utf-8"))
 
+            if 'Solution' in msg['Subject'] or 'One Week Down!' in msg['Subject']:
+                continue
+            
             if sys.argv[1] == 'list':
                 que_list_txt(qno=pno,
                              que_name=msg['Subject'])

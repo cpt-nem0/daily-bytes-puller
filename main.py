@@ -14,9 +14,11 @@ def get_credentials():
 
     global USER_EMAIL
     global USER_PASSWORD
-
-    USER_EMAIL = input('Email: ')
-    USER_PASSWORD = getpass.getpass()
+    try:
+        USER_EMAIL = input('Email: ')
+        USER_PASSWORD = getpass.getpass()
+    except:
+        print('Wrong Password or ID, try again...')
 
     return (USER_EMAIL, USER_PASSWORD)
 
@@ -82,7 +84,7 @@ def read_email():
             _typ, data = mail.fetch(num, '(RFC822)')
             msg = email.message_from_string(data[0][1].decode("utf-8"))
 
-            if 'Solution' in msg['Subject'] or 'One Week Down!' in msg['Subject']:
+            if 'Solution' in msg['Subject'] or msg['Subject'] == 'One Week Down!':
                 continue
             
             if sys.argv[1] == 'list':

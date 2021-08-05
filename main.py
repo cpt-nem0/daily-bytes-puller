@@ -14,11 +14,9 @@ def get_credentials():
 
     global USER_EMAIL
     global USER_PASSWORD
-    try:
-        USER_EMAIL = input('Email: ')
-        USER_PASSWORD = getpass.getpass()
-    except:
-        print('Wrong Password or ID, try again...')
+
+    USER_EMAIL = input('Email: ')
+    USER_PASSWORD = getpass.getpass()
 
     return (USER_EMAIL, USER_PASSWORD)
 
@@ -84,7 +82,9 @@ def read_email():
             _typ, data = mail.fetch(num, '(RFC822)')
             msg = email.message_from_string(data[0][1].decode("utf-8"))
 
-            if 'Solution' in msg['Subject'] or msg['Subject'] == 'One Week Down!':
+            if 'Solution' in msg['Subject'] \
+                or msg['Subject'] == 'One Week Down!' \
+                or msg['Subject'] == r'Celebration sale, up to 50% off!':
                 continue
             
             if sys.argv[1] == 'list':
@@ -98,6 +98,9 @@ def read_email():
 
             pno += 1
 
+    except imaplib.IMAP4.error:
+        print('Login failed, try again...')
+    
     except Exception as e:
         print(e)
 
